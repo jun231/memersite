@@ -57,4 +57,5 @@ Home:<br>
     </div>
 </div>
 @endforeach
+{{$posts->links()}}
 @endsection

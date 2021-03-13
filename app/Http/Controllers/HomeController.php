@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
+use Illuminate\Pagination\Paginator;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,7 @@ class HomeController extends Controller
     // 投稿一覧表示
     public function index()
     {
-        $posts=Post::orderBy('id', 'desc')->get();
+        $posts=Post::orderBy('id', 'desc')->paginate(10);
         $user=auth()->user();
         return view('home', compact('posts', 'user'));
     }
@@ -38,7 +39,7 @@ class HomeController extends Controller
         if($post==null){
             return redirect()->route('home')->with('message', 'まだ投稿はありません');
         }else{
-            $posts=Post::orderBy('id', 'desc')->where('user_id', $user)->get();
+            $posts=Post::orderBy('id', 'desc')->where('user_id', $user)->paginate(10);
             return view('mypost', compact('posts'));
         }
     }
@@ -50,7 +51,7 @@ class HomeController extends Controller
         if($comment==null){
             return redirect()->route('home')->with('message', 'まだコメントはありません');
         }else{
-            $comments=Comment::orderBy('id', 'desc')->where('user_id', $user)->get();
+            $comments=Comment::orderBy('id', 'desc')->where('user_id', $user)->paginate(10);
             return view('mycomment', compact('comments'));
         }  
     }

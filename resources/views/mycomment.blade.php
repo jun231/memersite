@@ -52,4 +52,5 @@
     </div>
 </div>
 @endforeach
+{{$posts->links()}}
 @endsection
